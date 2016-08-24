@@ -24,12 +24,13 @@ class MoviesController < ApplicationController
   # POST /movies
   # POST /movies.json
   def create
-    @movie = Movie.new(movie_params)
+    #@movie = Movie.new(movie_params)
 
     @movie = Movie.new(movie_params)
     # @tags = Tag.find(movie_params["tag_ids"])
     # @movie.tags << @tags
     tag_ids = movie_params["tag_ids"].delete_if{ |x| x.empty? }
+    puts tag_ids
     @tags = Tag.find(tag_ids)
     @movie.tags << @tags
 
@@ -83,6 +84,6 @@ class MoviesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def movie_params
-      params.require(:movie).permit(:name, :tag_ids [])
+      params.require(:movie).permit(:name, tag_ids:[])
     end
 end
